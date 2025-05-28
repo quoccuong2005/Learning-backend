@@ -1,0 +1,88 @@
+extends ../../layouts/default.pug
+
+block main 
+    .container.my-3
+      h1.mb-4 Danh sách sản phẩm
+      
+      .card.mb-3 
+        .card-header Bộ lọc và Tìm kiếm 
+        .card-body 
+          .row
+            .col-md-6
+              // Các nút lọc trạng thái
+              button(
+                  class= "btn btn-sm ml-1 btn-outline-success active"
+                  button-status =""
+              ) Tất cả
+              button(
+                  class= "btn btn-sm ml-1 btn-outline-success"
+                  button-status ="active"
+              ) Đang hoạt động
+              button(
+                  class= "btn btn-sm ml-1 btn-outline-success"
+                  button-status ="inactive" 
+              ) Ngừng hoạt động
+            
+            .col-md-6
+              // Form tìm kiếm
+              form(id="form-search")
+                .input-group
+                  input.form-control(
+                    type="text", 
+                    placeholder="Nhập từ khóa...", 
+                    name="keyword",
+                    value=keyword
+                  )
+                  button.btn.btn-outline-primary(type="submit") 
+                    i.fa.fa-search
+                    |  Tìm kiếm
+      
+      .card
+        .card-body
+          table.table.table-bordered
+            thead
+              tr.bg-light
+                th STT
+                th Hình ảnh
+                th Tiêu đề
+                th Giá
+                th Trạng thái
+                th Hành động
+            tbody
+              if products && products.length > 0
+                each item, index in products
+                  tr
+                    td #{index + 1}
+                    td
+                      if item && item.thumbnail
+                        img(src=item.thumbnail, alt=item.title, width="100")
+                      else
+                        span Không có hình ảnh
+                    td #{item ? item.title : 'Không có tiêu đề'}
+                    td #{item && item.price ? item.price : '0'}$
+                    td
+                      if(item && item.status == "active")
+                        a(href="#", class="btn btn-success btn-sm") Đang hoạt động
+                      else
+                        a(href="#", class="btn btn-danger btn-sm") Ngừng hoạt động
+                    td
+                      a.btn.btn-warning.btn-sm.me-2(href="#") Sửa
+                      a.btn.btn-danger.btn-sm(href="#") Xóa
+              else
+                tr
+                  td(colspan="6", class="text-center") Không có sản phẩm nào.
+
+
+      // Phân trang
+      nav 
+        ul(class="pagination" )
+          //- li(class="page-item")
+          //-    button(class="page-link") Trang trước
+          li(class="page-item")
+             button(class="page-link") 1
+          li(class="page-item active")
+              button(class="page-link") 2
+          li(class="page-item")
+               button(class="page-link") 3
+          //- li(class="page-item")
+          //-       button(class="page-link") Trang sau              
