@@ -1,0 +1,36 @@
+extends ../../layouts/default.pug
+
+
+block main 
+    h1(class="mb-4") Chỉnh sửa vai trò
+
+   
+
+    form(
+        action = `/admin/dashboard/roles/${record.id}?_method=PATCH`
+        method = "POST"
+    )
+        div(class="form-group")
+            label(for="title") Tiêu đề
+            input(
+                type="text"
+                class="form-control"
+                name="title"
+                required 
+                value = record.title
+            )
+        div(class="form-group")
+            label(for="desc") Mô tả
+            input(
+                type="text"
+                class ="form-control"
+                id="desc"
+                name="description"
+                value = record.description
+                required
+            )
+        div(class="form-group")
+            button(
+                type="submit"
+                class="btn btn-primary"
+            ) Cập nhật        
