@@ -1,0 +1,93 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.my-3
+    h1.mb-4 Danh sách nhóm quyền
+
+    .card.mb-3
+      .card-header Bộ lọc và Tìm kiếm
+      .card-body
+        .row
+          .col-md-6
+            // Các nút lọc trạng thái
+            button(
+              class="btn btn-sm ml-1 btn-outline-success active"
+              button-status=""
+            ) Tất cả
+            button(
+              class="btn btn-sm ml-1 btn-outline-success"
+              button-status="active"
+            ) Đang hoạt động
+            button(
+              class="btn btn-sm ml-1 btn-outline-success"
+              button-status="inactive"
+            ) Ngừng hoạt động
+
+          .col-md-6
+            // Form tìm kiếm
+            form(action="", method="GET")
+              .input-group
+                input.form-control(
+                  type="text",
+                  placeholder="Nhập từ khóa...",
+                  name="keyword",
+                  value=keyword
+                )
+                button.btn.btn-outline-primary(type="submit")
+                  i.fa.fa-search
+                  |  Tìm kiếm
+
+    // Nút thêm mới
+    .text-right.mb-3
+      a.btn.btn-primary(href="/admin/roles/create")
+        i.fa.fa-plus
+        |  Thêm mới
+
+    .card
+      .card-body
+        table.table.table-bordered
+          thead
+            tr.bg-light
+              th STT
+              th Tên nhóm quyền
+              th Mô tả
+              th Trạng thái
+              th Hành động
+          tbody
+            if records && records.length > 0
+              each item, index in records
+                tr
+                  td #{index + 1}
+                  td #{item.title}
+                  td #{item.description}
+                  td
+                    if(item.status == "active")
+                      a(href="#", class="btn btn-success btn-sm") Đang hoạt động
+                    else
+                      a(href="#", class="btn btn-danger btn-sm") Ngừng hoạt động
+                  td
+                    a.btn.btn-warning.btn-sm.me-2(href="/admin/roles/edit/"+item.id) Sửa
+                    button.btn.btn-danger.btn-sm.btn-delete(data-id=item.id) Xóa
+            else
+              tr
+                td(colspan="5", class="text-center") Không có nhóm quyền nào.
+
+    // Phân trang
+    if pagination && pagination.totalPage > 1
+      nav.d-flex.justify-content-center
+        ul.pagination
+          if pagination.currentPage > 1
+            li.page-item
+              a.page-link(href="?page=1") Đầu
+            li.page-item
+              a.page-link(href="?page=" + (pagination.currentPage - 1)) Trước
+          
+          - for(var i = 1; i <= pagination.totalPage; i++)
+            li(class=pagination.currentPage == i ? "page-item active" : "page-item")
+              a.page-link(href="?page=" + i) #{i}
+              
+          if pagination.currentPage < pagination.totalPage
+            li.page-item
+              a.page-link(href="?page=" + (pagination.currentPage + 1)) Sau
+            li.page-item
+              a.page-link(href="?page=" + pagination.totalPage) Cuối

@@ -1,0 +1,14 @@
+extends ../../layouts/default.pug
+
+block main 
+    .container
+        h1 Tạo Role Mới
+        form(action="/admin/roles/create" method="POST")
+            .form-group
+                label(for="roleName") Tên Role
+                input#roleName.form-control(type="text" name="title" required placeholder="Nhập tên role")
+            .form-group
+                label(for="roleDescription") Mô tả
+                textarea#roleDescription.form-control(name="description" rows="3" placeholder="Nhập mô tả role")
+            button.btn.btn-primary(type="submit") Tạo Role
+            a.btn.btn-secondary(href="/admin/roles") Hủy
