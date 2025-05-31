@@ -50,3 +50,26 @@ if (tablePermissions) {
         }
     })
 }
+
+
+const dataRecord = document.querySelector('[data-records]');
+
+if (dataRecord) {
+    const records = JSON.parse(dataRecord.getAttribute('data-records'));
+    const tablePermissions = document.querySelector('[table-permissions]');
+    records.forEach((record, index) => {
+        const permissions = record.permissions
+        console.log(permissions)
+        permissions.forEach(permissions => {
+            const row = tablePermissions.querySelector(`[data-name="${permissions}"]`);
+            if (!row) {
+                console.error(`Không tìm thấy dòng với tên "${permissions}"`);
+                return;
+            }
+            const input = row.querySelectorAll("input")[index];
+            input.checked = true;
+
+        })
+    })
+
+} 
