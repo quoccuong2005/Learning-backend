@@ -1,0 +1,12 @@
+extends ../../layouts/default.pug
+block main 
+    .container
+        h1 Danh Sách Tài Khoản
+        
+        card.mb-3 
+            .card-header Danh sách
+            .card-body 
+                .row 
+                    .col-8
+                    .col-4.text-right 
+                        a.btn.btn-primary(href="/admin/accounts/create") Tạo tài khoản

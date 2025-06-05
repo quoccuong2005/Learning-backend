@@ -1,0 +1,22 @@
+extends ../../layouts/default.pug
+
+block main 
+    .container
+        h1 Tạo mới tài khoản
+        form(action="/admin/accounts/create" method="POST")
+            .form-group
+                label(for="username") Tên đăng nhập
+                input#username.form-control(type="text" name="username" required)
+            .form-group
+                label(for="email") Email
+                input#email.form-control(type="email" name="email" required)
+            .form-group
+                label(for="password") Mật khẩu
+                input#password.form-control(type="password" name="password" required)
+            .form-group
+                label(for="role") Quyền
+                select#role.form-control(name="role" required)
+                    option(value="user") User
+                    option(value="admin") Admin
+            button.btn.btn-primary(type="submit") Tạo tài khoản
+            a.btn.btn-secondary(href="/admin/accounts") Hủy
